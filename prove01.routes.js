@@ -140,7 +140,6 @@ const requestHandler = (req, res) => {
                 console.log(parsedBody);
                 console.log(user.name + ' ' + user.username);
                 users.push(user);
-
             });
             res.statusCode = 302;
             res.setHeader('Location', '/users');

@@ -13,10 +13,35 @@
           <%= title %>
         </h1>
         <p>This is the placeholder for Team Activity 02</p>
+        
       </div>
     </div>
     <div class="container">
-
+      <h3 style="color: red;">
+        <%= userError %>
+      </h3>
+      <form class="input-frm" action="/ta02/addUser" method="POST">
+        <div class="controls">
+            
+            <label>Please Enter a Username to add to the user list</label>
+            <input name="username" type="text" class="control-input" />
+        </div>
+        <button type="submit" class="btn">Add Username</button>
+    </form>
+    <form class="input-frm" action="/ta02/removeUser" method="POST">
+      <div class="controls">
+          
+          <label>Please Enter a Username to remove from list</label>
+          <input name="username" type="text" class="control-input" />
+      </div>
+      <button type="submit" class="btn">Remove Username</button>
+  </form>
+    <ul>
+      <% for(let user of userList){%>
+        <li><%= user.username %> </li>
+     <% } %>
+    </ul>
+    
     </div>
 
 
