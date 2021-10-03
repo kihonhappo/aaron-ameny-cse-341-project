@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+console.log('teamRoutes tao1.js');
 router.get('/', (req, res, next) => {
   res.render('pages/teamPages/ta01', {
     title: 'Team Activity 01',
