@@ -1,8 +1,9 @@
 @media (min-width: 600px) {
+    main{padding: 20px;}
     .grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      grid-gap: 30px;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-gap: 20px;
     }
     
     .card {
@@ -13,7 +14,7 @@
     
     .card__header,
     .card__content {
-      padding: 1em;
+      padding: 1rem;
     }
     
     .card__header h1,
@@ -25,10 +26,15 @@
     
     .card__image {
       width: 100%;
+      text-align: center;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
     }
     
     .card__image img {
-      width: 100%;
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
     }
     
     .card__actions {
@@ -70,18 +76,23 @@
 }
 
 .product__title {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     text-align: center;
+    height: 50px;
 }
 
 .product__price {
     text-align: center;
     color: #4d4d4d;
-    margin-bottom: 0.5rem;
-}
+    margin-bottom: 1rem;
+    }
 
 .product__description {
     text-align: center;
+    height: 200px;
+    overflow-y: auto;
 }
 
 .delete{color: red;}
+
+.hide{display: none;}

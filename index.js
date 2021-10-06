@@ -15,7 +15,8 @@ const cors = require('cors');
 
 const corsOptions = {
   origin: "https://aaron-ameny-cse-341-project.herokuapp.com/",
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  SameSite: 'None'
 }
 
 const express = require('express');
@@ -24,6 +25,7 @@ const path = require('path');
 const routes = require('./routes');
 const PORT = process.env.PORT || 5000; // So we can run on heroku || (OR) localhost:5000
 //console.log('index.js');
+const mongoose = require('mongoose');
 const app = express();
 app.use(cors(corsOptions));
 
@@ -35,9 +37,9 @@ const options = {
   family: 4
 }
 
-const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://kihonhappo:popeye50$@cluster0.3yxeh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://kihonhappo:popeye50$@cluster0.3yxeh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-/*mongoose
+mongoose
   .connect(
     MONGODB_URL, options
   )
@@ -47,7 +49,7 @@ const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://kihonhappo:popeye5
   })
   .catch(err => {
     console.log(err);
-  });*/
+  });
 
 
 // Route setup. You can implement more in the future!
