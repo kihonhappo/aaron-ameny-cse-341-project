@@ -33,10 +33,10 @@ router.post('/addUser', (req, res, next) => {
     error_msg = 'Username already exists!';
   }
   
-  res.redirect('/ta02');
+  res.redirect('/teamPages/ta02');
 });
 
-router.post('/removeUser', (req, res, next) => {
+router.post('/teamPages/removeUser', (req, res, next) => {
   let user = users.filter(x => req.body.username === x.username)[0];
   if(user === undefined ){
     error_msg = 'Username is Not here right now!';
@@ -45,7 +45,7 @@ router.post('/removeUser', (req, res, next) => {
     users = users.filter(x => req.body.username != x.username);
   }
   
-  res.redirect('/ta02');
+  res.redirect('/teamPages/ta02');
 });
 
 module.exports = router;

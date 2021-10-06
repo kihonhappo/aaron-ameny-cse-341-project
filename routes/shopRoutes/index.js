@@ -8,15 +8,17 @@ const routes = require('express').Router();
 routes
     //.use('/ta01', ta01)
     //.use('/ta02', ta02)
-    .use('/node01', require('./node01'))
+    .use('/shop', require('./shop'))
+    .use('/products', require('./products'))
+    .use('/admin', require('./admin'))
    /* .use('ta02', require('.ta02'))
     .use('/ta03', require('./ta03'))
     .use('/ta04', require('./ta04'))*/
     .get('/', (req, res, next) => {
     // This is the primary index, always handled last.
-        res.render('pages/node/', {
-          title: 'W01 Node Activities',
-          path: '/node',
+        res.render('pages/shopPages/', {
+          title: ' Pages',
+          path: '/shopPages',
         });
   })
   

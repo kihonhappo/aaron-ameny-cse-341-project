@@ -1,17 +1,15 @@
 
 const routes = require('express').Router();
-//const nodePages = require('./nodeRoutes');
-//const provePages = require('./proveRoutes');
+const nodePages = require('./nodeRoutes');
+const provePages = require('./proveRoutes');
 const teamPages = require('./teamRoutes');
-const shopPages = require('./shopRoutes/shop01'); // So we can run on heroku || (OR) localhost:5000
-const ta01Routes = require('./teamRoutes/ta01');
+const shopPages = require('./shopRoutes'); // So we can run on heroku || (OR) localhost:5000
+//const ta01Routes = require('./teamRoutes/ta01');
 routes
- // .use('./nodePages', nodePages)
- // .use('./provePages', provePages)
- //.use('/ta01', ta01Routes)
- .use('./shop01', shopPages)
-  .use('/ta01', teamPages)
-  
+  .use('/node', nodePages)
+  .use('/prove', provePages)
+  .use('/shopPages', shopPages)
+  .use('/teamPages', teamPages)
   
   .get('/', (req, res, next) => {
     // This is the primary index, always handled last.

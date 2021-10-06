@@ -1,27 +1,37 @@
 
-
-
-    let file = '';
+module.exports = class Fetcher{
+    constructor(file){
+        this.file = file;
+        this.error = '';
+        this.items = [];
+    }
     
-    let error = '';
         
-    loadJSON = function(file){
+    loadJSON(cb){
         const fs = require('fs');
-        fs.readFile(file, (err, data) => {
+        fs.readFile(this.file, (err, data) => {
             if (err) {
                 this.error = err;
+                cb([]);
             } 
             else{
-                this.items = JSON.parse(data);
+                cb(JSON.parse(data));
+                //return this.items;
+                //console.log(this.items);
+                //list = this.items;
             }
           });
+
           
     }
-    filterData = function(term){
+    filterData(term){
         
-        let filtered = items.filter(x => x.tags.indexOf(term) > -1);
+        let filtered = this.items.filter(x => x.tags.indexOf(term) > -1);
         return filtered;
     }
 
-    module.exports = fetcher;
+}
+
+   
+  
 

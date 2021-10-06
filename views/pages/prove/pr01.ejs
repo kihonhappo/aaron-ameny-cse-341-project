@@ -3,6 +3,7 @@
 
 <head>
   <% include ../../includes/header.ejs %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/prove.css" />
 </head>
 
 <body>
@@ -12,16 +13,45 @@
         <h1>
           <%= title %>
         </h1>
-        <p>This is the placeholder for Team Activity 02</p>
+        <p>This is the placeholder for Prove IT Activity 01</p>
         
       </div>
     </div>
     <div class="container">
-      
-      
+      <form class="input-frm" action="/prove/pr01/create-user" method="POST">
+        <div class="controls">
+            <label>Please Enter a Name</label>
+            <input name="name" type="text" class="control-input" />
+            <label>Please Enter a Username</label>
+            <input name="username" type="text" class="control-input" />
+        </div>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+    <main class="content">
+      <h3>User Manager</h3>
+      <table class="user-table">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Status</th>
+          </thead>
+          <tbody>
+            <% if (users.length > 0) { %>
+              <% users.forEach((user) => { %>
+                <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.usernam %></td>
+                    <td><span class="<%= 'status ' + user.status %>"><%= user.status %></span></td>
+                </tr>
+             <% }) %>
+             <% } else { %>
+              <tr><td colspan="3">There are No Users in the user list.</td></tr>
+            <% } %>
+          </tbody>
+      </table>
+  </main>
     </div>
 
 
-</body>
-
-</html>
+    <% include ../../includes/end.ejs %>

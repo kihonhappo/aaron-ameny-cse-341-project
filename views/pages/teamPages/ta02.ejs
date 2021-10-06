@@ -20,7 +20,7 @@
       <h3 style="color: red;">
         <%= userError %>
       </h3>
-      <form class="input-frm" action="/ta02/addUser" method="POST">
+      <form class="input-frm" action="/teamPages/ta02/addUser" method="POST">
         <div class="controls">
             
             <label>Please Enter a Username to add to the user list</label>
@@ -28,7 +28,7 @@
         </div>
         <button type="submit" class="btn">Add Username</button>
     </form>
-    <form class="input-frm" action="/ta02/removeUser" method="POST">
+    <form class="input-frm" action="/teamPages/ta02/removeUser" method="POST">
       <div class="controls">
           
           <label>Please Enter a Username to remove from list</label>
@@ -45,6 +45,4 @@
     </div>
 
 
-</body>
-
-</html>
+    <% include ../../includes/end.ejs %>

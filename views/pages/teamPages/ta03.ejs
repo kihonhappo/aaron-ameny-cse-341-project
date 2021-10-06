@@ -22,7 +22,7 @@
     </div>
     <div class="tool-bar">
      
-      <form class="search-form" action="/ta03" method="POST">
+      <form class="search-form" action="/teamPages/ta03" method="POST">
         <div class="form-control">
             <label for="name">Title</label>
             <input type="text" name="name" id="name">
@@ -50,7 +50,7 @@
                 <article class="card product-item">
                     <header class="card__header">
                         <h1 class="product__title"><%= item.name %> 
-                            <a href="/?action=delete&book=<%= item.name %>" class="delete">X</a>
+                           <!-- <a href="/teamPages?action=delete&book=<%= item.name %>" class="delete">X</a> -->
                         </h1>
                     </header>
                     
@@ -72,7 +72,4 @@
       <% } %>
     </div>
 
-
-</body>
-
-</html>
+    <% include ../../includes/end.ejs %>

@@ -1,4 +1,62 @@
-
+@media (min-width: 600px) {
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-gap: 30px;
+    }
+    
+    .card {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+    
+    .card__header,
+    .card__content {
+      padding: 1em;
+    }
+    
+    .card__header h1,
+    .card__content h1,
+    .card__content h2,
+    .card__content p {
+      margin: 0;
+    }
+    
+    .card__image {
+      width: 100%;
+    }
+    
+    .card__image img {
+      width: 100%;
+    }
+    
+    .card__actions {
+        padding: 1em;
+        text-align: center;
+    }
+    
+    .card__actions button,
+    .card__actions a {
+        margin: 0 0.25rem;
+    }
+    
+    .btn {
+      font: inherit;
+      border: 1px solid #00695c;
+      color: #00695c;
+      background: white;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    .btn:hover,
+    .btn:active {
+      background-color: #00695c;
+      color: white;
+    }
+  }
+  
 
 .product-form {
     width: 20rem;
