@@ -95,4 +95,5 @@
 
 .delete{color: red;}
 
-.hide{display: none;}
+.num-spin{width: 80px; display: inline-block; margin-left: 10px; opacity: 1;}
+

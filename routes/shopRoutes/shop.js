@@ -13,12 +13,24 @@ router.get('/', (req, res, next) => {
       path: 'shop', // For pug, EJS
       activeShop: true, // For HBS
       contentCSS: true,
-      prods: prods // For HBS
+      prods: prods
       
     });
   });
   
 });
 
+router.post('/add-product', (req, res, next) => {
+  
+  let user = users.filter(x => req.body.username === x.username)[0];
+  if(user === undefined ){
+    users.push({username: req.body.username});
+  }
+  else{
+    error_msg = 'Username already exists!';
+  }
+  
+  res.redirect('/teamPages/ta02');
+});
 
 module.exports = router;

@@ -1,0 +1,9 @@
+.tbl-img{width: 25%;}
+.tbl-actions, .row-actions{width: 150px;}
+[type=checkbox]{vertical-align: center;}
+.tbl-actions a{margin-left: 5px;}
+.row-actions a{margin-left: 10px;}
+td{text-align: center; vertical-align: center;}
+
+.row-actions{text-align: left;}
+
