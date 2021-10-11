@@ -15,11 +15,11 @@ const path = require('path');
 const routes = require('./routes');
 const PORT = process.env.PORT || 5000; // So we can run on heroku || (OR) localhost:5000
 //console.log('index.js');
-const mongodb = require('mongodb');
+//const mongodb = require('mongodb');
 //const { mongo } = require('mongoose');
-const MongoClient = mongodb.MongoClient;
-const mongoConnect = require('./util/database');
-const mongoose = require('mongoose');
+//const MongoClient = mongodb.MongoClient;
+const mongoConnect = require('./util/database').mongoConnect;
+//const mongoose = require('mongoose');
 const app = express();
 app.use(cors(corsOptions));
 
@@ -43,8 +43,8 @@ const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://kihonhappo:popeye5
   })
   .catch(err => {
     console.log(err);
-  });
-  */
+  });*/
+  
 
 app
   .use(express.static(path.join(__dirname, 'public')))
@@ -54,10 +54,11 @@ app
   //.use('/ta01', ta01Routes)
   .use('/', routes)
   
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+  //.listen(PORT, () => console.log(`Listening on ${PORT}`));
   
-  /*mongoConnect((client) => {
-    console.log(client);
+  mongoConnect(() => {
+    //console.log(client);
+    //app.listen(5000);
     app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-  });
-  */
+  }); 
+  

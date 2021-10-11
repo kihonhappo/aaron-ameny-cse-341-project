@@ -1,3 +1,16 @@
+.add-product-frm{
+  width: 40%;
+  margin: 0 auto;
+}
+h3{text-align: center;}
+.product-form {
+  width: 30rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+  float: left;
+}
+
 .form-control {
   margin: 1rem 0;
 }
@@ -21,3 +34,12 @@
 .form-control textarea:focus {
   outline-color: #00695c;
 }
+
+.prod-iframe{
+  float: right;
+  width: 500px;
+  height: 600px;
+}
+
+input[type=number] {width: 80px;}
+.product-image{float: right; width: 30%;}

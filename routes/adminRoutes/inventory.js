@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
+const adminController = require('../../controllers/admin');
 const Fetcher = require('../../objects/fetcher');
 const fetch = new Fetcher('./data/products.json');
 let prods = [];
 
-router.get('/', (req, res, next) => {
+
+router.get('/', adminController.getProducts);
+/*router.get('/', (req, res, next) => {
   fetch.loadJSON(prods => {
     res.render('pages/adminPages/inventory', {
       title: 'Inventory',
@@ -16,7 +18,7 @@ router.get('/', (req, res, next) => {
       
     });
   });
-});
+});*/
 
 
 module.exports = router;

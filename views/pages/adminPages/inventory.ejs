@@ -14,10 +14,10 @@
           <thead>
             <tr>
               <% Object.keys(prods[0]).forEach(function(key) { %>
-                <% if(key == 'id'){ %>
+                <% if(key == '_id'){ %>
                 <th class="tbl-actions">
-                  <input type="checkbox" /> 
-                  <a class="link" href="/admin/new-product"><i class="fa fa-plus"></i></a>
+                  <input id="check-all" type="checkbox" /> 
+                  <a class="link" href="/adminPages/admin/add-product"><i class="fa fa-plus"></i></a>
                   <a class="link" href="/admin/edit-products-batch"><i class="fa fa-edit"></i></a>
                   <a class="link" href="/admin/copy-products-batch"><i class="fa fa-copy"></i></a>
                   <a class="link" href="/admin/delete-products-batch"><i class="fa fa-trash"></i></a>
@@ -30,16 +30,16 @@
           </thead>
           <tbody>
             <% for (let product of prods) { %>
-              <tr data-id="<%= product.id %>">
+              <tr data-id="<%= product._id %>">
                   <% Object.keys(product).forEach(function(key) { %>
                     <% switch(key){ 
-                        case 'id': %>
-                          <td data-id="<%= product.id %>" class="row-actions">
+                        case '_id': %>
+                          <td data-id="<%= product._id %>" class="row-actions">
                             <div class="btn-group">
-                              <input type="checkbox" data-id="<%= product.id %>" />
-                              <a class="link" href="<%= '/admin/edit-product?id=' + product.id %>"><i class="fa fa-edit"></i></a>
-                              <a class="link" href="<%= '/admin/copy-product?id=' + product.id %>"><i class="fa fa-copy"></i></a>
-                              <a class="link" href="<%= '/admin/delete-product?id=' + product.id %>"><i class="fa fa-trash"></i></a>
+                              <input class="row-check" type="checkbox" data-id="<%= product._id %>" />
+                              <a class="link" href="<%= '/admin/edit-product?id=' + product._id %>"><i class="fa fa-edit"></i></a>
+                              <a class="link" href="<%= '/admin/copy-product?id=' + product._id %>"><i class="fa fa-copy"></i></a>
+                              <a class="link" href="<%= '/admin/delete-product?id=' + product._id %>"><i class="fa fa-trash"></i></a>
                             </div>
                           </td>
                           <% break;  
@@ -64,5 +64,5 @@
     <% } %>
 </main>
 
-
+<script type="text/javascript" src="/scripts/inventory.js"></script>
     <% include ../../includes/end.ejs %>

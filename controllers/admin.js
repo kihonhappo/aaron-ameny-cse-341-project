@@ -1,12 +1,23 @@
 const Product = require('../models/product');
 
+exports.getAdmin = (req, res, next) => {
+  res.render('pages/adminPages/admin', {
+    title: 'Admin',
+    path: 'Admin', // For pug, EJS
+    activeAdmin: true, // For HBS
+    contentCSS: true // For HBS
+    
+  });
+};
+
+
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
     .then(products => {
-      res.render('admin/product-list', {
+      res.render('pages/adminPages/inventory', {
         prods: products,
-        pageTitle: 'All Products',
-        path: '/products'
+        title: 'Inventory',
+        path: 'inventory',
       });
     })
     .catch(err => {
@@ -16,7 +27,7 @@ exports.getProducts = (req, res, next) => {
 
 
 exports.getAddProduct = (req, res, next) => {
-  res.render('admin/edit-product', {
+  res.render('pages/adminPages/add-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false
@@ -25,23 +36,27 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const image = req.body.image;
   const price = req.body.price;
   const description = req.body.description;
+  const category = req.body.category;
+  const quantity = req.body.quantity;
   const product = new Product(
     title,
     price,
     description,
-    imageUrl,
-    null,
-    req.user._id
+    category,
+    quantity,
+    image,
+    null
+    
   );
   product
     .save()
     .then(result => {
       // console.log(result);
       console.log('Created Product');
-      res.redirect('/admin/products');
+      res.redirect('/adminPages/inventory');
     })
     .catch(err => {
       console.log(err);
@@ -96,10 +111,10 @@ exports.postEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
     .then(products => {
-      res.render('admin/products', {
+      res.render('pages/adminPages/inventory', {
         prods: products,
-        pageTitle: 'Admin Products',
-        path: '/admin/products'
+        title: 'Inventory',
+        path: '/inventory'
       });
     })
     .catch(err => console.log(err));
