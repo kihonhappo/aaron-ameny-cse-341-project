@@ -1,22 +1,34 @@
 const fs = require('fs');
 const path = require('path');
-
+const mongo_db = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class Product{
-  constructor(title, price, description, category, quantity, image){
+  constructor(title, price, description, category, quantity, image, _id){
     this.title = title;
     this.price = price;
     this.description = description;
     this.category = category;
     this.quantity = quantity;
     this.image = image;
+    this._id = _id;
   }
 
   save(){
     const db = getDb();
-    return db.collection('products')
-      .insertOne(this)
+    let dbOp;
+    if(this._id){
+
+      dbOp = db
+        .collection('products')
+        .updateOne({_id: new mongo_db.ObjectId(this._id)}, {$set: {
+          title: this.title, price: this.price, description: this.description, category: this.category, quantity: this.quantity, image: this.image}});
+    }
+    else{
+      dbOp = db.collection('products').insertOne(this);
+    }
+    
+    return dbOp
       .then(result => {
         console.log(result);
       })
@@ -31,8 +43,35 @@ class Product{
       .find()
       .toArray()
       .then(products => {
-        console.log(products);
+        //console.log(products);
         return products;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  static findById(prodId) {
+    const db = getDb();
+    return db
+      .collection('products')
+      .find({ _id: new mongo_db.ObjectId(prodId) })
+      .next()
+      .then(product => {
+        console.log(product);
+        return product;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  static deleteById(prodId) {
+    const db = getDb();
+    return db
+      .collection('products')
+      .deleteOne({ _id: new mongo_db.ObjectId(prodId) })
+      .then(result => {
+        console.log('Deleted');
       })
       .catch(err => {
         console.log(err);

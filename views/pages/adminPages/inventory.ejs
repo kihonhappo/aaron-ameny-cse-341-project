@@ -18,7 +18,7 @@
                 <th class="tbl-actions">
                   <input id="check-all" type="checkbox" /> 
                   <a class="link" href="/adminPages/admin/add-product"><i class="fa fa-plus"></i></a>
-                  <a class="link" href="/admin/edit-products-batch"><i class="fa fa-edit"></i></a>
+                  <!--<a class="link" href="/admin/edit-products-batch"><i class="fa fa-edit"></i></a>-->
                   <a class="link" href="/admin/copy-products-batch"><i class="fa fa-copy"></i></a>
                   <a class="link" href="/admin/delete-products-batch"><i class="fa fa-trash"></i></a>
                 </th>
@@ -37,9 +37,9 @@
                           <td data-id="<%= product._id %>" class="row-actions">
                             <div class="btn-group">
                               <input class="row-check" type="checkbox" data-id="<%= product._id %>" />
-                              <a class="link" href="<%= '/admin/edit-product?id=' + product._id %>"><i class="fa fa-edit"></i></a>
-                              <a class="link" href="<%= '/admin/copy-product?id=' + product._id %>"><i class="fa fa-copy"></i></a>
-                              <a class="link" href="<%= '/admin/delete-product?id=' + product._id %>"><i class="fa fa-trash"></i></a>
+                              <a class="link" href="<%= '/adminPages/admin/edit-product/' + product._id + '?edit=true' %>"><i class="fa fa-edit"></i></a>
+                              <a class="link" href="<%= '/adminPages/admin/copy-product?productId=' + product._id %>"><i class="fa fa-copy"></i></a>
+                              <a class="link" href="<%= '/adminPages/admin/delete-product?productId=' + product._id %>"><i class="fa fa-trash"></i></a>
                             </div>
                           </td>
                           <% break;  

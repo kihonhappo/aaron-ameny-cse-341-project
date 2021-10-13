@@ -28,12 +28,7 @@
                               }); %></h3>
                             <p class="product__description"><%= product.description %> </p>
                         </div>
-                        <form action="/adminPages/add-product" class="card__actions">
-                            <label>Quantity</label>
-                            <input type="number" placeholder="Qty" name="quantity" id="quantity" min="1" max="<%= product.quantity %>" value="1" class="form-control num-spin" />
-                            <button class="btn">Add to Cart</button>
-                            <input type="hidden" value="<%= product.description %>" />
-                        </form>
+                        <%- include('../../includes/add-to-cart.ejs') %>
                     </article>
                 <% } %>
             </div>

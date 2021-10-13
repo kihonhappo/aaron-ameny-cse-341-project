@@ -1,6 +1,6 @@
-const Product = require('../models/product');
 
-exports.getAdmin = (req, res, next) => {
+
+exports.getStyle = (req, res, next) => {
   res.render('pages/adminPages/admin', {
     title: 'Admin',
     path: 'Admin', // For pug, EJS
@@ -11,7 +11,7 @@ exports.getAdmin = (req, res, next) => {
 };
 
 
-exports.getProducts = (req, res, next) => {
+exports.getCounter = (req, res, next) => {
   Product.fetchAll()
     .then(products => {
       res.render('pages/adminPages/inventory', {
@@ -89,25 +89,21 @@ exports.postEditProduct = (req, res, next) => {
   const _id = req.body.productId;
   const title = req.body.title;
   const price = req.body.price;
-  const category = req.body.category;
+  const image = req.body.imageUrl;
   const description = req.body.description;
-  const quantity = req.body.quantity;
-  const image = req.body.image;
-  
+
   const product = new Product(
     title,
     price,
     description,
-    category,
     image,
-    quantity,
     _id
   );
   product
     .save()
     .then(result => {
       console.log('UPDATED PRODUCT!');
-      res.redirect('/adminPages/inventory');
+      res.redirect('/admin/products');
     })
     .catch(err => console.log(err));
 };

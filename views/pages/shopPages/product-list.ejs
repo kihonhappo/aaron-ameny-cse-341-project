@@ -7,7 +7,7 @@
     </head>
 
     <body>
-        <%- include('../includes/navigation.ejs') %>
+        <%- include('../../includes/nav.ejs') %>
 
             <main>
                 <% if (prods.length > 0) { %>
@@ -20,7 +20,7 @@
                                     </h1>
                                 </header>
                                 <div class="card__image">
-                                    <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                                    <img src="<%= product.image %>" alt="<%= product.title %>">
                                 </div>
                                 <div class="card__content">
                                     <h2 class="product__price">$
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="card__actions">
                                     <a href="/products/<%= product._id %>" class="btn">Details</a>
-                                    <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                                    <%- include('../../includes/add-to-cart.ejs', {product: product}) %>
                                 </div>
                             </article>
                             <% } %>
@@ -41,4 +41,4 @@
                         <h1>No Products Found!</h1>
                         <% } %>
             </main>
-            <%- include('../includes/end.ejs') %>
+            <%- include('../../includes/end.ejs') %>
