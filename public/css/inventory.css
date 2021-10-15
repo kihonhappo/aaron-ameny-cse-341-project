@@ -4,6 +4,10 @@
 .tbl-actions a{margin-left: 5px;}
 .row-actions a{margin-left: 10px;}
 td{text-align: center; vertical-align: center;}
-
+th{text-transform: capitalize;}
 .row-actions{text-align: left;}
+
+.fa-trash{color: red;}
+.fa-copy{color: orange;}
+.fa-plus, .fa-edit{color: green;}
 

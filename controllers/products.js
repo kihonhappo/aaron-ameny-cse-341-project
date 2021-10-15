@@ -16,6 +16,19 @@ exports.postAddProduct = (req, res, next) => {
   res.redirect('/');
 };
 
+exports.getCategories = (req, res, next) =>{
+  Product.fetchCats(cats => {
+    res.render('shop', {
+      cats: cats,
+      title: 'Shop',
+      path: '/',
+      hasProducts: products.length > 0,
+      activeShop: true,
+      productCSS: true
+    });
+  });
+};
+
 exports.getProducts = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('shop', {

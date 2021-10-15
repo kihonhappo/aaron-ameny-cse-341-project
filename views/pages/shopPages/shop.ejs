@@ -3,32 +3,17 @@
 
 <head>
   <%- include('../../includes/header.ejs') %>
-<link rel="stylesheet" type="text/css" href="/css/items.css" /> 
+
 </head>
 
 <body>
     <%- include('../../includes/nav.ejs') %>
     <main>
-        <% if (prods.length > 0) { %>
+        <% if (cats.length > 0) { %>
             <div class="grid">
-                <% for (let product of prods) { %>
-                    <article class="card product-item">
-                        <header class="card__header">
-                            <h1 class="product__title"><%= product.title %> 
-                                <a href="/?action=delete&book=<%= product.title %>" class="delete hide">X</a>
-                            </h1>
-                        </header>
-                        <div class="card__image">
-                            <img src="<%= product.image %>" alt="<%= product.title %>">
-                        </div>
-                        <div class="card__content">
-                            <h3 class="product__price"><%= (product.price).toLocaleString('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                              }); %></h3>
-                            <p class="product__description"><%= product.description %> </p>
-                        </div>
-                        <%- include('../../includes/add-to-cart.ejs') %>
+                <% for (let cat of [...new Set(cats)]) { %>
+                    <article class="cat-card">
+                        <h4 class="cat-title"><%= cat %></h4>
                     </article>
                 <% } %>
             </div>

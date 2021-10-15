@@ -34,6 +34,46 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
+exports.getCopyProduct = (req, res, next) => {
+  
+  const prodId = req.params.productId;
+  console.log('Inside of getEditProduct: prodID: ' + prodId);
+  Product.findById(prodId)
+    .then(product_copy => {
+      if (!product_copy) {
+        return res.redirect('/adminPages/inventory');
+      }
+
+      const title = product_copy.title;
+      const image = product_copy.image;
+      const price = product_copy.price;
+      const description = product_copy.description;
+      const category = product_copy.category;
+      const quantity = product_copy.quantity;
+      const product = new Product(
+        title,
+        price,
+        description,
+        category,
+        quantity,
+        image,
+        null
+        );
+        product
+          .save()
+          .then(result => {
+            // console.log(result);
+            console.log('Created Product');
+            res.redirect('/adminPages/inventory');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      
+     })
+     .catch(err => console.log(err));
+};
+
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const image = req.body.image;
@@ -99,8 +139,8 @@ exports.postEditProduct = (req, res, next) => {
     price,
     description,
     category,
-    image,
     quantity,
+    image,
     _id
   );
   product
@@ -123,6 +163,18 @@ exports.getProducts = (req, res, next) => {
     })
     .catch(err => console.log(err));
 };
+*/
+
+exports.getDeleteProduct = (req, res, next) => {
+  const prodId = req.params.productId; 
+  Product.deleteById(prodId)
+    .then(() => {
+      console.log('DESTROYED PRODUCT');
+      res.redirect('/adminPages/inventory');
+    })
+    .catch(err => console.log(err));
+};
+
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
@@ -133,4 +185,3 @@ exports.postDeleteProduct = (req, res, next) => {
     })
     .catch(err => console.log(err));
 };
-*/

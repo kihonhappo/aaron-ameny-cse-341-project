@@ -16,11 +16,11 @@
               <% Object.keys(prods[0]).forEach(function(key) { %>
                 <% if(key == '_id'){ %>
                 <th class="tbl-actions">
-                  <input id="check-all" type="checkbox" /> 
-                  <a class="link" href="/adminPages/admin/add-product"><i class="fa fa-plus"></i></a>
+                  <input title="Select All/Unselect All" id="check-all" type="checkbox" /> 
+                  <a class="link" title="New Product" href="/adminPages/admin/add-product"><i class="fa fa-plus"></i></a>
                   <!--<a class="link" href="/admin/edit-products-batch"><i class="fa fa-edit"></i></a>-->
-                  <a class="link" href="/admin/copy-products-batch"><i class="fa fa-copy"></i></a>
-                  <a class="link" href="/admin/delete-products-batch"><i class="fa fa-trash"></i></a>
+                  <a class="link" title="Batch Copy" href="/admin/copy-products-batch"><i class="fa fa-copy"></i></a>
+                  <a class="link" title="Batch Delete" href="/admin/delete-products-batch"><i class="fa fa-trash"></i></a>
                 </th>
                 <% } else { %>
                 <th><%= key %></th>
@@ -36,10 +36,10 @@
                         case '_id': %>
                           <td data-id="<%= product._id %>" class="row-actions">
                             <div class="btn-group">
-                              <input class="row-check" type="checkbox" data-id="<%= product._id %>" />
-                              <a class="link" href="<%= '/adminPages/admin/edit-product/' + product._id + '?edit=true' %>"><i class="fa fa-edit"></i></a>
-                              <a class="link" href="<%= '/adminPages/admin/copy-product?productId=' + product._id %>"><i class="fa fa-copy"></i></a>
-                              <a class="link" href="<%= '/adminPages/admin/delete-product?productId=' + product._id %>"><i class="fa fa-trash"></i></a>
+                              <input title="Select Item" class="row-check" type="checkbox" data-id="<%= product._id %>" />
+                              <a title="Edit" class="link" href="<%= '/adminPages/admin/edit-product/' + product._id + '?edit=true' %>"><i class="fa fa-edit"></i></a>
+                              <a title="Copy" class="link" href="<%= '/adminPages/admin/copy-product/' + product._id %>"><i class="fa fa-copy"></i></a>
+                              <a title="Delete" class="link" href="<%= '/adminPages/admin/delete-product/' + product._id %>"><i class="fa fa-trash"></i></a>
                             </div>
                           </td>
                           <% break;  

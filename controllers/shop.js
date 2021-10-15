@@ -1,11 +1,76 @@
 const Product = require('../models/product');
 
+
+exports.getCats = (req, res, next) => {
+  Product.fetchCats()
+    .then(cats => {
+    res.render('pages/shopPages/shop', {
+      title: 'Shop',
+      path: 'shop', // For pug, EJS
+      cats: cats
+      
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  
+};
+
+exports.getProductDetail = (req, res, next) => {
+  Product.fetchCats()
+    .then(cats => {
+    res.render('pages/shopPages/product-detail', {
+      title: 'Product Details',
+      path: 'product-detail', // For pug, EJS
+      cats: cats
+      
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  
+};
+
+exports.getCheckOut = (req, res, next) => {
+  Product.fetchCats()
+    .then(cats => {
+    res.render('pages/shopPages/checkout', {
+      title: 'Checkout',
+      path: 'checkout', // For pug, EJS
+      cats: cats
+      
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  
+};
+
+exports.getOrders = (req, res, next) => {
+  Product.fetchCats()
+    .then(cats => {
+    res.render('pages/shopPages/orders', {
+      title: 'Orders',
+      path: 'order', // For pug, EJS
+      orders: cats
+      
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  
+};
+
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
     .then(products => {
-      res.render('shop/product-list', {
+      res.render('pages/shopPages/products', {
         prods: products,
-        pageTitle: 'All Products',
+        title: 'All Products',
         path: '/products'
       });
     })
@@ -13,6 +78,21 @@ exports.getProducts = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.getCart = (req, res, next) => {
+  Product.fetchAll()
+    .then(products => {
+      res.render('pages/shopPages/cart', {
+        prods: products,
+        title: 'Cart',
+        path: '/cart'
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 /*
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;

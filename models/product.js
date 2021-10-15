@@ -36,6 +36,22 @@ class Product{
         console.log(err);
       });
   }
+  static fetchCats(cb) {
+    const db = getDb();
+    return db
+      .collection('products')
+      .find().map(function(x){
+        return x.category;
+      })
+      .toArray()
+      .then(cats => {
+        //console.log(products);
+        return cats;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   static fetchAll(cb) {
     const db = getDb();
     return db
