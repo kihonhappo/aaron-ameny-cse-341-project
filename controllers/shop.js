@@ -79,7 +79,7 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
-exports.getCart = (req, res, next) => {
+/*exports.getCart = (req, res, next) => {
   Product.fetchAll()
     .then(products => {
       res.render('pages/shopPages/cart', {
@@ -91,26 +91,26 @@ exports.getCart = (req, res, next) => {
     .catch(err => {
       console.log(err);
     });
-};
+};*/
 
-/*
+
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  // Product.findAll({ where: { id: prodId } })
-  //   .then(products => {
-  //     res.render('shop/product-detail', {
-  //       product: products[0],
-  //       pageTitle: products[0].title,
-  //       path: '/products'
-  //     });
-  //   })
-  //   .catch(err => console.log(err));
+  /* Product.findAll({ where: { id: prodId } })
+     .then(products => {
+       res.render('shop/product-detail', {
+         product: products[0],
+         pageTitle: products[0].title,
+         path: '/products'
+       });
+     })
+     .catch(err => console.log(err));*/
   Product.findById(prodId)
     .then(product => {
-      res.render('shop/product-detail', {
+      res.render('pages/shopPages/product-detail', {
         product: product,
         pageTitle: product.title,
-        path: '/products'
+        path: '/product-detail'
       });
     })
     .catch(err => console.log(err));
@@ -130,13 +130,14 @@ exports.getIndex = (req, res, next) => {
     });
 };
 
+
 exports.getCart = (req, res, next) => {
   req.user
     .getCart()
     .then(products => {
-      res.render('shop/cart', {
+      res.render('pages/shopPages/cart', {
         path: '/cart',
-        pageTitle: 'Your Cart',
+        title: 'Your Cart',
         products: products
       });
     })
@@ -187,4 +188,3 @@ exports.getOrders = (req, res, next) => {
     })
     .catch(err => console.log(err));
 };
-*/

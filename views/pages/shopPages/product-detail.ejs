@@ -3,19 +3,27 @@
 
 <head>
   <%- include('../../includes/header.ejs') %>
-<link rel="stylesheet" type="text/css" href="/css/items.css" /> 
+<link rel="stylesheet" type="text/css" href="/css/product-detail.css" /> 
 </head>
 
 <body>
     <%- include('../../includes/nav.ejs') %>
         <main class="centered">
-            <h1><%= product.title %></h1>
-            <hr>
             <div class="image">
                 <img src="<%= product.image %>" alt="<%= product.title %>">
             </div>
-            <h2><%= product.price %></h2>
-            <p><%= product.description %></p>
-            <%- include('../../includes/add-to-cart.ejs') %>
+            <div class="details-cont">
+                <h2 class="details-title"><%= product.title %></h2>
+                <hr>
+                <h3 class="details-price">$<%= product.price %></h3>
+                
+                <p class="details-desc"><%= product.description %></p>
+                <div class="add-cart-cont">
+                    <a href="/shopPages/shop/products" class="btn btn-details">Cancel</a>
+                    <%- include('../../includes/add-to-cart.ejs') %>
+                </div>
+                
+            </div>
+            
         </main>
         <%- include('../../includes/end.ejs') %>

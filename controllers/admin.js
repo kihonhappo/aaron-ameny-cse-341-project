@@ -57,7 +57,50 @@ exports.getCopyProduct = (req, res, next) => {
         category,
         quantity,
         image,
-        null
+        null,
+        req.user._id
+        );
+        product
+          .save()
+          .then(result => {
+            // console.log(result);
+            console.log('Created Product');
+            res.redirect('/adminPages/inventory');
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      
+     })
+     .catch(err => console.log(err));
+};
+
+exports.getCopyProducts = (req, res, next) => {
+  
+  const prods = req.params.prods;
+  console.log('Inside of getCopyProducts: prodID: ' + prods);
+  prods.foreach
+  Product.findById(prodId)
+    .then(product_copy => {
+      if (!product_copy) {
+        return res.redirect('/adminPages/inventory');
+      }
+
+      const title = product_copy.title;
+      const image = product_copy.image;
+      const price = product_copy.price;
+      const description = product_copy.description;
+      const category = product_copy.category;
+      const quantity = product_copy.quantity;
+      const product = new Product(
+        title,
+        price,
+        description,
+        category,
+        quantity,
+        image,
+        null,
+        req.user._id
         );
         product
           .save()
@@ -88,7 +131,8 @@ exports.postAddProduct = (req, res, next) => {
     category,
     quantity,
     image,
-    null
+    null,
+    req.user._id
     
   );
   product

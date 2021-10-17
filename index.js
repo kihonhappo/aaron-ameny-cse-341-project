@@ -20,7 +20,9 @@ const PORT = process.env.PORT || 5000; // So we can run on heroku || (OR) localh
 //const MongoClient = mongodb.MongoClient;
 const mongoConnect = require('./util/database').mongoConnect;
 //const mongoose = require('mongoose');
+const User = require('./models/user');
 const app = express();
+
 app.use(cors(corsOptions));
 
 const options = {
@@ -52,6 +54,14 @@ app
   .set('view engine', 'ejs')
   .use(bodyParser({ extended: false })) // For parsing the body of a POST
   //.use('/ta01', ta01Routes)
+  .use((req, res, next) => {
+    User.findById('616b0356a8f425cdb262b923')
+      .then(user => {
+        req.user = new User(user.name, user.email, user.cart, user._id);
+        next();
+      })
+      .catch(err => console.log(err));
+  })
   .use('/', routes)
   
   //.listen(PORT, () => console.log(`Listening on ${PORT}`));

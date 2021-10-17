@@ -35,3 +35,12 @@ auto_load.addEventListener('click', (event) => {
         });
     });
 });
+
+const sels = frm.querySelectorAll('select');
+sels.forEach(function(sel){
+    //let options = sel.options;
+    let selected_val = sel.getAttribute('data-selected');
+    sel.value = selected_val;
+    //alert(selected_val);
+    //options[selected].text;
+});

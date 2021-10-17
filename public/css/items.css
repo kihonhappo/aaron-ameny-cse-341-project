@@ -40,11 +40,14 @@
     .card__actions {
         padding: 1em;
         text-align: center;
+        
+        width: 80%;
+        margin: 0 auto;
     }
     
     .card__actions button,
     .card__actions a {
-        margin: 0 0.25rem;
+        margin: 0 0.25rem;  
     }
     
     .btn {
@@ -54,7 +57,10 @@
       background: white;
       border-radius: 3px;
       cursor: pointer;
+      
+      
     }
+    .btn-details{float: left;}
     
     .btn:hover,
     .btn:active {
@@ -85,15 +91,36 @@
     text-align: center;
     color: #4d4d4d;
     margin-bottom: 1rem;
+    padding: 20px;
     }
 
 .product__description {
     text-align: center;
     height: 200px;
     overflow-y: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .delete{color: red;}
 
 .num-spin{width: 80px; display: inline-block; margin-left: 10px; opacity: 1;}
+
+/*@media (min-width: 300px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    
+  }
+   
+}
+
+@media (min-width: 400px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    
+  }
+   
+}*/
+
+
 

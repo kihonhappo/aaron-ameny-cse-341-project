@@ -4,7 +4,7 @@ const mongo_db = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class Product{
-  constructor(title, price, description, category, quantity, image, _id){
+  constructor(title, price, description, category, quantity, image, _id, userId){
     this.title = title;
     this.price = price;
     this.description = description;
@@ -12,6 +12,7 @@ class Product{
     this.quantity = quantity;
     this.image = image;
     this._id = _id;
+    this.userId = userId;
   }
 
   save(){
@@ -86,6 +87,19 @@ class Product{
     return db
       .collection('products')
       .deleteOne({ _id: new mongo_db.ObjectId(prodId) })
+      .then(result => {
+        console.log('Deleted');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  static deleteBatch(prodId) {
+    const db = getDb();
+    return db
+      .collection('products')
+      .deleteMany({ _id: new mongo_db.ObjectId(prodId) })
       .then(result => {
         console.log('Deleted');
       })
