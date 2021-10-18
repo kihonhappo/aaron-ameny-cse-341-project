@@ -11,6 +11,8 @@ router.get('/copy-product/:productId', adminController.getCopyProduct);
 router.get('/delete-product/:productId', adminController.getDeleteProduct);
 router.post('/edit-product', adminController.postEditProduct);
 
+router.get('/inventory', adminController.getProducts);
+router.get('/users', adminController.getUsers);
 
 
 

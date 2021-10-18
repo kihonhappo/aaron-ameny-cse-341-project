@@ -9,21 +9,22 @@
 <body>
     <%- include('../../includes/nav.ejs') %>
         <main class="centered">
-            <div class="image">
-                <img src="<%= product.image %>" alt="<%= product.title %>">
-            </div>
-            <div class="details-cont">
-                <h2 class="details-title"><%= product.title %></h2>
-                <hr>
-                <h3 class="details-price">$<%= product.price %></h3>
-                
-                <p class="details-desc"><%= product.description %></p>
-                <div class="add-cart-cont">
-                    <a href="/shopPages/shop/products" class="btn btn-details">Cancel</a>
-                    <%- include('../../includes/add-to-cart.ejs') %>
+            <div class="grid">
+                    <div class="image">
+                        <img src="<%= product.image %>" alt="<%= product.title %>">
+                    </div>
+                    <div class="details-cont">
+                        <h2 class="details-title"><%= product.title %></h2>
+                        <hr>
+                        <h3 class="details-price">$<%= product.price %></h3>
+                        
+                        <p class="details-desc"><%= product.description %></p>
+                        <div class="add-cart-cont">
+                            <a href="/shopPages/shop/products" class="btn btn-details">Cancel</a>
+                            <%- include('../../includes/add-to-cart.ejs') %>
+                        </div>
+                        
+                    </div>
                 </div>
-                
-            </div>
-            
         </main>
         <%- include('../../includes/end.ejs') %>

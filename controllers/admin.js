@@ -1,15 +1,31 @@
 const Product = require('../models/product');
+const User = require('../models/user');
 
 exports.getAdmin = (req, res, next) => {
   res.render('pages/adminPages/admin', {
     title: 'Admin',
     path: 'Admin', // For pug, EJS
     activeAdmin: true, // For HBS
-    contentCSS: true // For HBS
+    contentCSS: true, // For HBS
+    user: req.user
     
   });
 };
 
+exports.getUsers = (req, res, next) => {
+  User
+  .fetchAll()
+    .then(users => {
+      res.render('pages/adminPages/users', {
+        users: users,
+        title: 'User Manager',
+        path: 'users',
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
@@ -41,7 +57,7 @@ exports.getCopyProduct = (req, res, next) => {
   Product.findById(prodId)
     .then(product_copy => {
       if (!product_copy) {
-        return res.redirect('/adminPages/inventory');
+        return res.redirect('/adminPages/admin/inventory');
       }
 
       const title = product_copy.title;
@@ -65,7 +81,7 @@ exports.getCopyProduct = (req, res, next) => {
           .then(result => {
             // console.log(result);
             console.log('Created Product');
-            res.redirect('/adminPages/inventory');
+            res.redirect('/adminPages/admin/inventory');
           })
           .catch(err => {
             console.log(err);
@@ -83,7 +99,7 @@ exports.getCopyProducts = (req, res, next) => {
   Product.findById(prodId)
     .then(product_copy => {
       if (!product_copy) {
-        return res.redirect('/adminPages/inventory');
+        return res.redirect('/adminPages/admin/inventory');
       }
 
       const title = product_copy.title;
@@ -107,7 +123,7 @@ exports.getCopyProducts = (req, res, next) => {
           .then(result => {
             // console.log(result);
             console.log('Created Product');
-            res.redirect('/adminPages/inventory');
+            res.redirect('/adminPages/admin/inventory');
           })
           .catch(err => {
             console.log(err);
@@ -140,7 +156,7 @@ exports.postAddProduct = (req, res, next) => {
     .then(result => {
       // console.log(result);
       console.log('Created Product');
-      res.redirect('/adminPages/inventory');
+      res.redirect('/adminPages/admin/inventory');
     })
     .catch(err => {
       console.log(err);
@@ -150,14 +166,14 @@ exports.postAddProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
-    return res.redirect('/adminPages/inventory');
+    return res.redirect('/adminPages/admin/inventory');
   }
   const prodId = req.params.productId;
   console.log('Inside of getEditProduct: prodID: ' + prodId);
   Product.findById(prodId)
     .then(product => {
       if (!product) {
-        return res.redirect('/adminPages/inventory');
+        return res.redirect('/adminPages/admin/inventory');
       }
       res.render('pages/adminPages/edit-product', {
         pageTitle: 'Edit Product',
@@ -191,7 +207,7 @@ exports.postEditProduct = (req, res, next) => {
     .save()
     .then(result => {
       console.log('UPDATED PRODUCT!');
-      res.redirect('/adminPages/inventory');
+      res.redirect('/adminPages/admin/inventory');
     })
     .catch(err => console.log(err));
 };
@@ -214,7 +230,7 @@ exports.getDeleteProduct = (req, res, next) => {
   Product.deleteById(prodId)
     .then(() => {
       console.log('DESTROYED PRODUCT');
-      res.redirect('/adminPages/inventory');
+      res.redirect('/adminPages/admin/inventory');
     })
     .catch(err => console.log(err));
 };

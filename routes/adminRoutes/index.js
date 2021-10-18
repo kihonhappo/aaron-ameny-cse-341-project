@@ -9,7 +9,7 @@ routes
     //.use('/ta01', ta01)
     //.use('/ta02', ta02)
     
-    .use('/inventory', require('./inventory'))
+    
     .use('/admin', require('./admin'))
    /* .use('ta02', require('.ta02'))
     .use('/ta03', require('./ta03'))

@@ -10,7 +10,8 @@
   <% include ../../includes/nav.ejs %>
   <main>
     <% if (prods.length > 0) { %>
-        <table class="table table-striped table-outlined table-hover">
+        <table class="">
+          <caption><%= title %></caption>
           <thead>
             <tr>
               <% Object.keys(prods[0]).forEach(function(key) { %>
@@ -19,8 +20,8 @@
                   <input title="Select All/Unselect All" id="check-all" type="checkbox" /> 
                   <a class="link" title="New Product" href="/adminPages/admin/add-product"><i class="fa fa-plus"></i></a>
                   <!--<a class="link" href="/admin/edit-products-batch"><i class="fa fa-edit"></i></a>-->
-                  <a class="link" title="Batch Copy" href="/admin/copy-products-batch"><i class="fa fa-copy"></i></a>
-                  <a class="link" title="Batch Delete" href="/admin/delete-products-batch"><i class="fa fa-trash"></i></a>
+                  <a class="link" title="Batch Copy" href="/adminPages/admin/copy-products-batch"><i class="fa fa-copy"></i></a>
+                  <a class="link" title="Batch Delete" href="/adminPages/admin/delete-products-batch"><i class="fa fa-trash"></i></a>
                 </th>
                 <% } else { %>
                 <th><%= key %></th>
@@ -34,7 +35,7 @@
                   <% Object.keys(product).forEach(function(key) { %>
                     <% switch(key){ 
                         case '_id': %>
-                          <td data-id="<%= product._id %>" class="row-actions">
+                          <td data-label="Actions" data-id="<%= product._id %>" class="row-actions">
                             <div class="btn-group">
                               <input title="Select Item" class="row-check" type="checkbox" data-id="<%= product._id %>" />
                               <a title="Edit" class="link" href="<%= '/adminPages/admin/edit-product/' + product._id + '?edit=true' %>"><i class="fa fa-edit"></i></a>
@@ -45,13 +46,13 @@
                           <% break;  
                         case 'rating':
                       %>
-                        <td><%= JSON.stringify(product[key]) %></td>
+                        <td data-label="<%=key %>"><%= JSON.stringify(product[key]) %></td>
                       <% break;  
                         case 'image': %>
-                        <td><img alt="<%= product.title %>" class="tbl-img" src="<%= product[key] %>" /></td>
+                        <td data-label="<%=key %>"><img alt="<%= product.title %>" class="tbl-img" src="<%= product[key] %>" /></td>
                         <% break; 
                         default:  %>
-                          <td><%= product[key] %></td>
+                          <td data-label="<%=key %>"><%= product[key] %></td>
                         <% break;  %>
                       <% } %>
                   <% }); %>  

@@ -46,7 +46,7 @@
             <% if (edit){ %>
                 <input type="hidden" value="<%= product._id %>" name="productId">
             <% } %>
-            <a class="btn btn-danger" href="/adminPages/inventory">Cancel</a>
+            <a class="btn btn-danger" href="/adminPages/admin/inventory">Cancel</a>
             <button class="btn btn-warning" type="reset">Clear Form</button>
             <button class="btn btn-success" type="submit"><% if(edit) { %> Update Product<% } else { %> Add Product <% } %></button>
         </form>

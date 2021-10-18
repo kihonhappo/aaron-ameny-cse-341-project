@@ -16,7 +16,26 @@ class User {
     return db.collection('users').insertOne(this);
   }
 
+
+  static fetchAll(cb) {
+    const db = getDb();
+    return db
+      .collection('users')
+      .find()
+      .toArray()
+      .then(users => {
+        //console.log(products);
+        return users;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+
   addToCart(product) {
+    console.log('Add to cart product: ' + JSON.stringify(this.cart));
+    
     const cartProductIndex = this.cart.items.findIndex(cp => {
       return cp.productId.toString() === product._id.toString();
     });

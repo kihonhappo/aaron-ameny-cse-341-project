@@ -12,9 +12,33 @@
         <% if (cats.length > 0) { %>
             <div class="grid">
                 <% for (let cat of [...new Set(cats)]) { %>
-                    <article class="cat-card">
-                        <h4 class="cat-title"><%= cat %></h4>
-                    </article>
+                    <% switch(cat){ 
+                        case 'Earrings': %>
+                            <div class="col-md-4 col-morning">
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                            </div>
+                            <% break;
+                        case 'Bracelets': %>
+                            <div class="col-md-4 col-morning">
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                            </div>
+                            <% break;
+                        case 'Necklaces': %>
+                            <div class="col-md-4 col-morning">
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                            </div>
+                            <% break;
+                        case 'Rings': %>
+                            <div class="col-md-4 col-morning">
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                            </div>
+                            <% break;
+                        default: %>
+                            <div class="col-md-4 col-morning">
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                            </div>
+                            <% break;
+                     } %>
                 <% } %>
             </div>
         <% } else { %>

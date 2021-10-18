@@ -17,12 +17,27 @@ exports.getCats = (req, res, next) => {
   
 };
 
+exports.getProductsCat = (req, res, next) => {
+  const cat = req.params.cat;
+  Product.fetchAll()
+    .then(products => {
+      res.render('pages/shopPages/products', {
+        prods: products,
+        title: 'All Products',
+        path: '/products'
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 exports.getProductDetail = (req, res, next) => {
   Product.fetchCats()
     .then(cats => {
     res.render('pages/shopPages/product-detail', {
       title: 'Product Details',
-      path: 'product-detail', // For pug, EJS
+      path: '/product-detail', // For pug, EJS
       cats: cats
       
     });
@@ -38,7 +53,7 @@ exports.getCheckOut = (req, res, next) => {
     .then(cats => {
     res.render('pages/shopPages/checkout', {
       title: 'Checkout',
-      path: 'checkout', // For pug, EJS
+      path: '/checkout', // For pug, EJS
       cats: cats
       
     });
@@ -48,13 +63,13 @@ exports.getCheckOut = (req, res, next) => {
   });
   
 };
-
+/*
 exports.getOrders = (req, res, next) => {
   Product.fetchCats()
     .then(cats => {
-    res.render('pages/shopPages/orders', {
+    res.render('pages/shopPages/shop/orders', {
       title: 'Orders',
-      path: 'order', // For pug, EJS
+      path: '/order', // For pug, EJS
       orders: cats
       
     });
@@ -63,7 +78,7 @@ exports.getOrders = (req, res, next) => {
     console.log(err);
   });
   
-};
+};*/
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
@@ -152,7 +167,7 @@ exports.postCart = (req, res, next) => {
     })
     .then(result => {
       console.log(result);
-      res.redirect('/cart');
+      res.redirect('/shopPages/shop/cart');
     });
 };
 
@@ -161,7 +176,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
   req.user
     .deleteItemFromCart(prodId)
     .then(result => {
-      res.redirect('/cart');
+      res.redirect('/shopPages/shop/cart');
     })
     .catch(err => console.log(err));
 };
@@ -171,7 +186,7 @@ exports.postOrder = (req, res, next) => {
   req.user
     .addOrder()
     .then(result => {
-      res.redirect('/orders');
+      res.redirect('/shopPages/shop/orders');
     })
     .catch(err => console.log(err));
 };
@@ -180,7 +195,7 @@ exports.getOrders = (req, res, next) => {
   req.user
     .getOrders()
     .then(orders => {
-      res.render('shop/orders', {
+      res.render('pages/shopPages/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
         orders: orders

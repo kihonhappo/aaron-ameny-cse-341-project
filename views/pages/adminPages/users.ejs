@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../../includes/header.ejs %>
+  <link rel="stylesheet" type="text/css" href="/css/inventory.css" /> 
+</head>
+
+<body>
+  <% include ../../includes/nav.ejs %>
+  <main>
+    <% if (users.length > 0) { %>
+        <table class="">
+          <caption><%= title %></caption>
+          <thead>
+            <tr>
+              <% Object.keys(users[0]).forEach(function(key) { %>
+                <% if(key == '_id'){ %>
+                <th class="tbl-actions">
+                  <input title="Select All/Unselect All" id="check-all" type="checkbox" /> 
+                  <a class="link" title="New User" href="/adminPages/admin/add-user"><i class="fa fa-plus"></i></a>
+                  <!--<a class="link" href="/admin/edit-users-batch"><i class="fa fa-edit"></i></a>-->
+                  <a class="link" title="Batch Copy" href="/adminPages/admin/copy-users-batch"><i class="fa fa-copy"></i></a>
+                  <a class="link" title="Batch Delete" href="/adminPages/admin/delete-users-batch"><i class="fa fa-trash"></i></a>
+                </th>
+                <% } else { %>
+                <th><%= key %></th>
+                <% } %>
+              <% }); %>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let user of users) { %>
+              <tr data-id="<%= user._id %>">
+                  <% Object.keys(user).forEach(function(key) { %>
+                    <% switch(key){ 
+                        case '_id': %>
+                          <td data-label="Actions" data-id="<%= user._id %>" class="row-actions">
+                            <div class="btn-group">
+                              <input title="Select Item" class="row-check" type="checkbox" data-id="<%= user._id %>" />
+                              <a title="Edit" class="link" href="<%= '/adminPages/admin/edit-user/' + user._id + '?edit=true' %>"><i class="fa fa-edit"></i></a>
+                              <a title="Copy" class="link" href="<%= '/adminPages/admin/copy-user/' + user._id %>"><i class="fa fa-copy"></i></a>
+                              <a title="Delete" class="link" href="<%= '/adminPages/admin/delete-user/' + user._id %>"><i class="fa fa-trash"></i></a>
+                            </div>
+                          </td>
+                          <% break;  
+                        case 'rating':
+                      %>
+                        <td data-label="<%=key %>"><%= JSON.stringify(user[key]) %></td>
+                      <% break;  
+                        case 'image': %>
+                        <td data-label="<%=key %>"><img alt="<%= user.name %>" class="tbl-img" src="<%= user[key] %>" /></td>
+                        <% break; 
+                        default:  %>
+                          <td data-label="<%=key %>"><%= user[key] %></td>
+                        <% break;  %>
+                      <% } %>
+                  <% }); %>  
+              </tr>                      
+            <% } %>
+          </tbody>
+        </table>
+    <% } else { %>
+        <h1>No Users Found!</h1>
+    <% } %>
+</main>
+
+<script type="text/javascript" src="/scripts/inventory.js"></script>
+    <% include ../../includes/end.ejs %>

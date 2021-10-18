@@ -6,7 +6,7 @@ const fetch = new Fetcher('./data/products.json');
 let prods = [];
 
 
-router.get('/', adminController.getProducts);
+router.get('/inventory', adminController.getProducts);
 /*router.get('/', (req, res, next) => {
   fetch.loadJSON(prods => {
     res.render('pages/adminPages/inventory', {
