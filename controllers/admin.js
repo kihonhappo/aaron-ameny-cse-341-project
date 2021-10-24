@@ -57,7 +57,7 @@ exports.getAddProduct = (req, res, next) => {
 exports.getCopyProduct = (req, res, next) => {
   
   const prodId = req.params.productId;
-  console.log('Inside of getEditProduct: prodID: ' + prodId);
+  //console.log('Inside of getEditProduct: prodID: ' + prodId);
   Product.findById(prodId)
     .then(product_copy => {
       if (!product_copy) {
@@ -83,7 +83,7 @@ exports.getCopyProduct = (req, res, next) => {
           .save()
           .then(result => {
             // console.log(result);
-            console.log('Created Product');
+           // console.log('Created Product');
             res.redirect('/adminPages/admin/inventory');
           })
           .catch(err => {
@@ -97,7 +97,7 @@ exports.getCopyProduct = (req, res, next) => {
 exports.getCopyProducts = (req, res, next) => {
   
   const prods = req.params.prods;
-  console.log('Inside of getCopyProducts: prodID: ' + prods);
+ // console.log('Inside of getCopyProducts: prodID: ' + prods);
   prods.foreach
   Product.findById(prodId)
     .then(product_copy => {
@@ -125,7 +125,7 @@ exports.getCopyProducts = (req, res, next) => {
           .save()
           .then(result => {
             // console.log(result);
-            console.log('Created Product');
+            //console.log('Created Product');
             res.redirect('/adminPages/admin/inventory');
           })
           .catch(err => {
@@ -137,7 +137,7 @@ exports.getCopyProducts = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  console.log('Inside of Post add product: user: ' + JSON.stringify(req.user));
+  //console.log('Inside of Post add product: user: ' + JSON.stringify(req.user));
   const title = req.body.title;
   const image = req.body.image;
   const price = req.body.price;
@@ -158,7 +158,7 @@ exports.postAddProduct = (req, res, next) => {
     .save()
     .then(result => {
       // console.log(result);
-      console.log('Created Product');
+     // console.log('Created Product');
       res.redirect('/adminPages/admin/inventory');
     })
     .catch(err => {
@@ -172,7 +172,7 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/adminPages/admin/inventory');
   }
   const prodId = req.params.productId;
-  console.log('Inside of getEditProduct: prodID: ' + prodId);
+  //console.log('Inside of getEditProduct: prodID: ' + prodId);
   Product.findById(prodId)
     .then(product => {
       if (!product) {
@@ -209,7 +209,7 @@ exports.postEditProduct = (req, res, next) => {
       return product.save();
     })
     .then(result => {
-      console.log('UPDATED PRODUCT!');
+     // console.log('UPDATED PRODUCT!');
       res.redirect('/adminPages/admin/inventory');
     })
     .catch(err => console.log(err));
@@ -232,7 +232,7 @@ exports.getDeleteProduct = (req, res, next) => {
   const prodId = req.params.productId; 
   Product.findByIdAndRemove(prodId)
     .then(() => {
-      console.log('DESTROYED PRODUCT');
+      //console.log('DESTROYED PRODUCT');
       res.redirect('/adminPages/admin/inventory');
     })
     .catch(err => console.log(err));
@@ -243,7 +243,7 @@ exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findByIdAndRemove(prodId)
     .then(() => {
-      console.log('DESTROYED PRODUCT');
+      //console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products');
     })
     .catch(err => console.log(err));

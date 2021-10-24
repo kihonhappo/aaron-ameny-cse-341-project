@@ -21,7 +21,7 @@ exports.getCats = (req, res, next) => {
 
 exports.getProductsCat = (req, res, next) => {
   const cat = req.params.cat;
-  console.log('Inside of getProductsCat: ' + cat);
+  //console.log('Inside of getProductsCat: ' + cat);
   Product.find({categor: cat })
     .then(products => {
       products = products.filter(x => x.category == cat);
@@ -154,7 +154,7 @@ exports.getIndex = (req, res, next) => {
 
 
 exports.getCart = (req, res, next) => {
-  console.log(req.user.cart.items.length);
+  //console.log(req.user.cart.items.length);
   req.user
   .populate('cart.items.productId')
   .then(user => {
@@ -176,7 +176,7 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product);
     })
     .then(result => {
-      console.log(result);
+      //console.log(result);
       res.redirect('/shopPages/shop/cart');
     });
 };
@@ -219,7 +219,7 @@ exports.postOrder = (req, res, next) => {
 exports.getOrders = (req, res, next) => {
   Order.find({ 'user.userId': req.user._id })
     .then(orders => {
-      console.log('Get Orders: ' + JSON.stringify(orders));
+     // console.log('Get Orders: ' + JSON.stringify(orders));
       res.render('pages/shopPages/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
