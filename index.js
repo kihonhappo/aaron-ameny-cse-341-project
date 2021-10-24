@@ -7,6 +7,9 @@ const corsOptions = {
   optionsSuccessStatus: 200,
   SameSite: 'None'
 }
+//process.env.MONGODB_URL || const MONGODB_URL = "mongodb+srv://kihonhappo:popeye50$@cluster0.3yxeh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const MONGODB_URI = "mongodb+srv://kihonhappo:popeye50$@cluster0.3yxeh.mongodb.net/myFirstDatabase";
+
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -19,9 +22,16 @@ const PORT = process.env.PORT || 5000; // So we can run on heroku || (OR) localh
 //const { mongo } = require('mongoose');
 //const MongoClient = mongodb.MongoClient;
 const mongoConnect = require('./util/database').mongoConnect;
-//const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const User = require('./models/user');
+const session = require('express-session');
+const { request } = require('http');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const app = express();
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions'
+});
 
 app.use(cors(corsOptions));
 
@@ -33,7 +43,6 @@ const options = {
   family: 4
 }
 
-const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://kihonhappo:popeye50$@cluster0.3yxeh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 /*mongoose
   .connect(
@@ -47,7 +56,14 @@ const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://kihonhappo:popeye5
     console.log(err);
   });*/
   
-
+app.use(
+  session({
+    secret: 'my secret', 
+    resave: false, 
+    saveUninitialized: false,
+    store: store
+  })
+);
 app
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
@@ -55,9 +71,12 @@ app
   .use(bodyParser({ extended: false })) // For parsing the body of a POST
   //.use('/ta01', ta01Routes)
   .use((req, res, next) => {
-    User.findById('616b0356a8f425cdb262b923')
+    if (!req.session.user) {
+      return next();
+    }
+    User.findById(req.session.user._id)
       .then(user => {
-        req.user = new User(user.name, user.email, user.cart, user._id);
+        req.user = user;
         next();
       })
       .catch(err => console.log(err));
@@ -65,10 +84,18 @@ app
   .use('/', routes)
   
   //.listen(PORT, () => console.log(`Listening on ${PORT}`));
-  
+  mongoose
+  .connect(MONGODB_URI)
+  .then(result => {
+    
+    app.listen(5000);
+  })
+  .catch(err => {
+    console.log(err);
+  });/*
   mongoConnect(() => {
     //console.log(client);
     //app.listen(5000);
     app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-  }); 
+  }); */
   

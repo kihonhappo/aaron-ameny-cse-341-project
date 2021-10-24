@@ -17,7 +17,7 @@ routes
     .get('/', (req, res, next) => {
     // This is the primary index, always handled last.
         res.render('pages/shopPages/', {
-          title: ' Pages',
+          title: 'Shop Pages',
           path: '/shopPages',
         });
   })

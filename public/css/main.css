@@ -1,5 +1,5 @@
 .jumbotron {
-  background: #0065bd;
+  background: hsl(300, 58%, 36%);
   color: white;
   padding-bottom: 80px;
 }
@@ -43,3 +43,4 @@
 }
 
 .hide{display: none;}
+.btn-logout{display: inline-block; background: none;}

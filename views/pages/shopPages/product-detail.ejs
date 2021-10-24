@@ -21,7 +21,9 @@
                         <p class="details-desc"><%= product.description %></p>
                         <div class="add-cart-cont">
                             <a href="/shopPages/shop/products" class="btn btn-details">Cancel</a>
-                            <%- include('../../includes/add-to-cart.ejs') %>
+                            <% if (isAuthenticated) { %>
+                                <%- include('../../includes/add-to-cart.ejs', {product: product}) %>
+                            <% } %>
                         </div>
                         
                     </div>

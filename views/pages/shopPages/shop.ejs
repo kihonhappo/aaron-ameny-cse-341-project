@@ -15,27 +15,34 @@
                     <% switch(cat){ 
                         case 'Earrings': %>
                             <div class="col-md-4 col-morning">
-                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                                <h4 class="cat-title">
+                                    <a href="/shopPages/shop/products-cat/<%= cat %>"><%= cat %></a>
+                                </h4>
+                                <img src="/images/earings.jpg" class="cat-img" alt="<%= cat %>">
                             </div>
                             <% break;
                         case 'Bracelets': %>
                             <div class="col-md-4 col-morning">
-                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat/<%= cat %>"><%= cat %></a></h4>
+                                <img src="/images/bracelets.jpg" class="cat-img" alt="<%= cat %>">
                             </div>
                             <% break;
                         case 'Necklaces': %>
                             <div class="col-md-4 col-morning">
-                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat/<%= cat %>"><%= cat %></a></h4>
+                                <img src="/images/necklaces.jpg" class="cat-img" alt="<%= cat %>">
                             </div>
                             <% break;
                         case 'Rings': %>
                             <div class="col-md-4 col-morning">
-                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat/<%= cat %>"><%= cat %></a></h4>
+                                <img src="/images/rings.jpg" class="cat-img" alt="<%= cat %>">
                             </div>
                             <% break;
                         default: %>
                             <div class="col-md-4 col-morning">
-                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat?cat=<%= cat %>"><%= cat %></a></h4>
+                                <h4 class="cat-title"><a href="/shopPages/shop/products-cat/<%= cat %>"><%= cat %></a></h4>
+                                <img src="/images/hair.jpg" class="cat-img" alt="<%= cat %>">
                             </div>
                             <% break;
                      } %>

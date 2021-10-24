@@ -7,19 +7,21 @@ exports.getAdmin = (req, res, next) => {
     path: 'Admin', // For pug, EJS
     activeAdmin: true, // For HBS
     contentCSS: true, // For HBS
-    user: req.user
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn
     
   });
 };
 
 exports.getUsers = (req, res, next) => {
   User
-  .fetchAll()
+  .find()
     .then(users => {
       res.render('pages/adminPages/users', {
         users: users,
         title: 'User Manager',
-        path: 'users',
+        path: '/users',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => {
@@ -28,12 +30,13 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then(products => {
       res.render('pages/adminPages/inventory', {
         prods: products,
         title: 'Inventory',
-        path: 'inventory',
+        path: '/inventory',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => {
@@ -45,8 +48,9 @@ exports.getProducts = (req, res, next) => {
 exports.getAddProduct = (req, res, next) => {
   res.render('pages/adminPages/add-product', {
     pageTitle: 'Add Product',
-    path: '/admin/add-product',
-    editing: false
+    path: '/add-product',
+    editing: false,
+    isAuthenticated: req.session.isLoggedIn
   });
 };
 
@@ -66,16 +70,15 @@ exports.getCopyProduct = (req, res, next) => {
       const description = product_copy.description;
       const category = product_copy.category;
       const quantity = product_copy.quantity;
-      const product = new Product(
-        title,
-        price,
-        description,
-        category,
-        quantity,
-        image,
-        null,
-        req.user._id
-        );
+      const product = new Product({
+        title: title,
+        price: price,
+        description: description,
+        category: category,
+        quantity: quantity,
+        image: image,
+        userId: req.user
+      });
         product
           .save()
           .then(result => {
@@ -134,23 +137,23 @@ exports.getCopyProducts = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
+  console.log('Inside of Post add product: user: ' + JSON.stringify(req.user));
   const title = req.body.title;
   const image = req.body.image;
   const price = req.body.price;
   const description = req.body.description;
   const category = req.body.category;
   const quantity = req.body.quantity;
-  const product = new Product(
-    title,
-    price,
-    description,
-    category,
-    quantity,
-    image,
-    null,
-    req.user._id
+  const product = new Product({
+    title: title,
+    price: price,
+    description: description,
+    category: category,
+    quantity: quantity,
+    image: image,
+    userId: req.user
     
-  );
+  });
   product
     .save()
     .then(result => {
@@ -177,16 +180,17 @@ exports.getEditProduct = (req, res, next) => {
       }
       res.render('pages/adminPages/edit-product', {
         pageTitle: 'Edit Product',
-        path: '/adminPages/edit-product',
+        path: '/edit-product',
         edit: editMode,
-        product: product
+        product: product,
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const _id = req.body.productId;
+  const prodId = req.body.productId;
   const title = req.body.title;
   const price = req.body.price;
   const category = req.body.category;
@@ -194,17 +198,16 @@ exports.postEditProduct = (req, res, next) => {
   const quantity = req.body.quantity;
   const image = req.body.image;
   
-  const product = new Product(
-    title,
-    price,
-    description,
-    category,
-    quantity,
-    image,
-    _id
-  );
-  product
-    .save()
+  Product.findById(prodId)
+    .then(product => {
+      product.title = title;
+      product.price = price;
+      product.description = description;
+      product.category = category;
+      product.quantity = quantity;
+      product.image = image;
+      return product.save();
+    })
     .then(result => {
       console.log('UPDATED PRODUCT!');
       res.redirect('/adminPages/admin/inventory');
@@ -227,7 +230,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.getDeleteProduct = (req, res, next) => {
   const prodId = req.params.productId; 
-  Product.deleteById(prodId)
+  Product.findByIdAndRemove(prodId)
     .then(() => {
       console.log('DESTROYED PRODUCT');
       res.redirect('/adminPages/admin/inventory');
@@ -238,7 +241,7 @@ exports.getDeleteProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId)
+  Product.findByIdAndRemove(prodId)
     .then(() => {
       console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products');

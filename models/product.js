@@ -1,18 +1,58 @@
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+
+const productSchema = new Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  quantity: {
+    type: Number,
+    required: true
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
+});
+
+module.exports = mongoose.model('Product', productSchema);
+
+
+/*
 const fs = require('fs');
 const path = require('path');
 const mongo_db = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class Product{
-  constructor(title, price, description, category, quantity, image, _id, userId){
+  constructor(title, price, description, category, quantity, image, shop, _id){
     this.title = title;
     this.price = price;
     this.description = description;
     this.category = category;
     this.quantity = quantity;
     this.image = image;
+    this.shop = shop;
     this._id = _id;
-    this.userId = userId;
   }
 
   save(){
@@ -111,7 +151,7 @@ class Product{
 
 module.exports = Product;
 
-/*
+
 const p = path.join(
   path.dirname(process.mainModule.filename),
   'data',

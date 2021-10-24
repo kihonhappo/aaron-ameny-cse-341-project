@@ -1,11 +1,11 @@
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
   <div class="container">
     <ul class="nav navbar-nav">
-      <li><a href="/" style="padding: 0 2rem; margin: 0"><img class="logo" src="/images/BYUI-logo.png" alt="BYU Idaho logo"></a></li>
+      <li><a href="/" style="padding: 0 2rem; margin: 0"><img class="logo" src="/images/logo_pink.png" alt="Dina Bling logo"></a></li>
       <li class="<%= path === '/' ? 'active' : ''%>">
         <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
       </li>
-      <li class="dropdown">
+     <!-- <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Team Activities <span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
           <li class="<%= path === '/ta01' ? 'active' : ''%>"><a href="/teamPages/ta01">TA01</a></li>
@@ -26,27 +26,49 @@
         <ul class="dropdown-menu" role="menu">
           <li class="<%= path === '/node01' ? 'active' : ''%>"><a href="/node/node01">NODE01</a></li>
         </ul>
-      </li>
+      </li> -->
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Shop <span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
           <li class="<%= path === '/shop' ? 'active' : ''%>"><a href="/shopPages/shop">Shop</a></li>
           <li class="<%= path === '/shop' ? 'active' : ''%>"><a href="/shopPages/shop/products">Products</a></li>
-          <li class="<%= path === '/shop' ? 'active' : ''%>"><a href="/shopPages/shop/orders">Orders</a></li>
+          
         </ul>
       </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin<span class="caret"></span></a>
-        <ul class="dropdown-menu" role="menu">
-          <li class="<%= path === '/admin' ? 'active' : ''%>"><a href="/adminPages/admin">Dashboard</a></li>
-          <li class="<%= path === '/admin' ? 'active' : ''%>"><a href="/adminPages/admin/users">User Manager</a></li>
-          <li class="<%= path === '/admin' ? 'active' : ''%>"><a href="/adminPages/admin/add-product">Add Product</a></li>
-          <li class="<%= path === '/admin' ? 'active' : ''%>"><a href="/adminPages/admin/inventory">Inventory</a></li>
-        </ul>
-      </li>
+      <% if(isAuthenticated){ %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="<%= path === '/admin' ? 'active' : ''%>"><a href="/adminPages/admin">Dashboard</a></li>
+            <li class="<%= path === '/admin' ? 'active' : ''%>"><a href="/adminPages/admin/users">User Manager</a></li>
+            <li class="<%= path === '/admin' ? 'active' : ''%>"><a href="/adminPages/admin/add-product">Add Product</a></li>
+            <li class="<%= path === '/admin' ? 'active' : ''%>"><a href="/adminPages/admin/inventory">Inventory</a></li>
+          </ul>
+        </li>
+        <li class="<%= path === '/shop' ? 'active' : ''%>">
+          <a href="/shopPages/shop/orders">Orders</a>
+        </li>
+        
       <li class="<%= path === '/cart' ? 'active' : ''%>">
         <a href="/shopPages/shop/cart"><span class="fas fa-shopping-cart"></span> Cart</a>
       </li>
+      <% } %>
+      <% if(!isAuthenticated){ %>
+      <li class="<%= path === '/login' ? 'active' : ''%>">
+        <a href="/authPages/auth/login"><span class="fas fa-lock"></span> Login</a>
+      </li>
+      <li class="<%= path === '/signup' ? 'active' : ''%>">
+        <a href="/authPages/auth/signup"><span class="fas fa-user-plus"></span> Signup</a>
+      </li>
+      <% }else{ %>
+
+      <li class="<%= path === '/logout' ? 'active' : ''%>">
+       <a href="/authPages/auth/logout"><span class="fas fa-unlock"></span> Logout</a> 
+        <!-- <form action="/authPages/auth/logout" method="post" class="btn-logout">
+          <button type="submit"><span class="fas fa-unlock"></span> Logout</button>
+        </form> -->
+      </li>
+      <% } %>
     </ul>
   </div>
 </nav>
