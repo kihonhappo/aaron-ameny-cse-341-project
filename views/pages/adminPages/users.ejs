@@ -10,6 +10,7 @@
   <% include ../../includes/nav.ejs %>
   <main>
     <% if (users.length > 0) { %>
+        <textarea><%= Object.keys(users[0]) %></textarea>
         <table class="">
           <caption><%= title %></caption>
           <thead>

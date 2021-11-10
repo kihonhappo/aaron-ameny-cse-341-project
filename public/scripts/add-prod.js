@@ -11,6 +11,8 @@
 const frms = document.querySelectorAll('form');
 const frm = frms[0];
 //alert(frm.elements);
+const img_source = document.querySelectorAll('[name=image-source]');
+
 const test_load = {
     title: 'OVAL and Out - Rose Gold',
     price: 5,

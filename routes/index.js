@@ -26,6 +26,8 @@ routes
       isAuthenticated: req.session.isLoggedIn
     });
   })
+
+  .get('/500', errorController.get500)
   .use(errorController.get404);
   
  module.exports = routes;

@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const User = require('../models/user');
+const {validationResult} = require('express-validator/check');
 
 exports.getAdmin = (req, res, next) => {
   res.render('pages/adminPages/admin', {
@@ -7,8 +8,7 @@ exports.getAdmin = (req, res, next) => {
     path: 'Admin', // For pug, EJS
     activeAdmin: true, // For HBS
     contentCSS: true, // For HBS
-    user: req.user,
-    isAuthenticated: req.session.isLoggedIn
+    user: req.user
     
   });
 };
@@ -16,41 +16,51 @@ exports.getAdmin = (req, res, next) => {
 exports.getUsers = (req, res, next) => {
   User
   .find()
+  .select('_id email name')
+  .lean()
     .then(users => {
+
       res.render('pages/adminPages/users', {
         users: users,
         title: 'User Manager',
-        path: '/users',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/users'
       });
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.find()
+  Product.find({userId: req.user._id})
+  .select('_id title category price description quantity image userId')
+  .lean()
     .then(products => {
       res.render('pages/adminPages/inventory', {
         prods: products,
         title: 'Inventory',
-        path: '/inventory',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/inventory'
       });
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
 
 exports.getAddProduct = (req, res, next) => {
+  
   res.render('pages/adminPages/add-product', {
     pageTitle: 'Add Product',
     path: '/add-product',
-    editing: false,
-    isAuthenticated: req.session.isLoggedIn
+    edit: false,
+    hasError: false,
+    errorMessage: null,
+    validationErrors: []
   });
 };
 
@@ -91,7 +101,11 @@ exports.getCopyProduct = (req, res, next) => {
           });
       
      })
-     .catch(err => console.log(err));
+     .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.getCopyProducts = (req, res, next) => {
@@ -133,7 +147,11 @@ exports.getCopyProducts = (req, res, next) => {
           });
       
      })
-     .catch(err => console.log(err));
+     .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postAddProduct = (req, res, next) => {
@@ -144,15 +162,36 @@ exports.postAddProduct = (req, res, next) => {
   const description = req.body.description;
   const category = req.body.category;
   const quantity = req.body.quantity;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).render('pages/adminPages/add-product', {
+      pageTitle: 'Add Product',
+      path: '/admin/add-product',
+      edit: true,
+      hasError: true,
+      product: {
+        title: title,
+        image: image,
+        price: price,
+        description: description,
+        category: category,
+        quantitiy: quantity,
+        userId: req.user
+      },
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array()
+    });
+  }
   const product = new Product({
     title: title,
+    image: image,
     price: price,
     description: description,
     category: category,
     quantity: quantity,
-    image: image,
     userId: req.user
-    
   });
   product
     .save()
@@ -163,6 +202,9 @@ exports.postAddProduct = (req, res, next) => {
     })
     .catch(err => {
       console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -183,10 +225,16 @@ exports.getEditProduct = (req, res, next) => {
         path: '/edit-product',
         edit: editMode,
         product: product,
-        isAuthenticated: req.session.isLoggedIn
+        hasError: false,
+        errorMessage: null,
+        validationErrors: []
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -197,22 +245,52 @@ exports.postEditProduct = (req, res, next) => {
   const description = req.body.description;
   const quantity = req.body.quantity;
   const image = req.body.image;
-  
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).render('pages/adminPages/edit-product', {
+      pageTitle: 'Edit Product',
+      path: '/admin/edit-product',
+      edit: true,
+      hasError: true,
+      product: {
+        title: title,
+        image: image,
+        price: price,
+        description: description,
+        category: category,
+        quantitiy: quantity,
+        productId: prodId,
+        userId: req.user
+      },
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array()
+    });
+  } 
+
   Product.findById(prodId)
     .then(product => {
+      if (product.userId.toString() !== req.user._id.toString()) {
+        return res.redirect('/');
+      }
+      
       product.title = title;
       product.price = price;
       product.description = description;
       product.category = category;
       product.quantity = quantity;
       product.image = image;
-      return product.save();
+      return product.save().then(result => {
+        // console.log('UPDATED PRODUCT!');
+         res.redirect('/adminPages/admin/inventory');
+       });
     })
-    .then(result => {
-     // console.log('UPDATED PRODUCT!');
-      res.redirect('/adminPages/admin/inventory');
-    })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 /*
 exports.getProducts = (req, res, next) => {
@@ -224,7 +302,11 @@ exports.getProducts = (req, res, next) => {
         path: '/inventory'
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 */
 
@@ -235,16 +317,24 @@ exports.getDeleteProduct = (req, res, next) => {
       //console.log('DESTROYED PRODUCT');
       res.redirect('/adminPages/admin/inventory');
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findByIdAndRemove(prodId)
+  Product.deleteOne({ _id: prodId, userId: req.user._id})
     .then(() => {
       //console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };

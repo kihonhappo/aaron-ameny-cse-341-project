@@ -6,24 +6,48 @@
 <body>
    <%- include('../../includes/nav.ejs') %>
 
-    <main>
-        <form class="login-form" action="/authPages/auth/signup" method="POST">
+    <main class="form-cont">
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+        <form class="login-form" action="/authPages/auth/signup" method="POST" novalidate>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="textbox" name="name" id="name">
+                <input
+                    class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="name" 
+                    id="name"
+                    value="<%= oldInput.namel %>">
             </div>
             <div class="form-group">
                 <label for="email">E-Mail</label>
-                <input type="email" name="email" id="email">
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
+                    type="email" 
+                    name="email" 
+                    id="email" 
+                    value="<%= oldInput.email %>">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password">
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>"
+                    type="password" 
+                    name="password" 
+                    id="password" 
+                    value="<%= oldInput.password %>">
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" name="confirmPassword" id="confirmPassword">
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
+                    type="password" 
+                    name="confirmPassword" 
+                    id="confirmPassword" 
+                    value="<%= oldInput.confirmPassword %>">
             </div>
+            <input type="hidden" name="_csrf" value="csrfToken">
             <button class="btn" type="submit">Signup</button>
         </form>
     </main>

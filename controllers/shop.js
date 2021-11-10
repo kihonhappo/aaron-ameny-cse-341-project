@@ -8,13 +8,14 @@ exports.getCats = (req, res, next) => {
     res.render('pages/shopPages/shop', {
       title: 'Categories',
       path: '/shop', // For pug, EJS
-      cats: cats,
-      isAuthenticated: req.session.isLoggedIn
+      cats: cats
       
     });
   })
   .catch(err => {
-    console.log(err);
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   });
   
 };
@@ -28,12 +29,13 @@ exports.getProductsCat = (req, res, next) => {
       res.render('pages/shopPages/products', {
         prods: products,
         title: 'All Products',
-        path: '/products',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/products'
       });
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -43,12 +45,13 @@ exports.getProductDetail = (req, res, next) => {
     res.render('pages/shopPages/product-detail', {
       title: 'Product Details',
       path: '/product-detail', // For pug, EJS
-      cats: cats,
-      isAuthenticated: req.session.isLoggedIn
+      cats: cats
     });
   })
   .catch(err => {
-    console.log(err);
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   });
   
 };
@@ -64,7 +67,9 @@ exports.getCheckOut = (req, res, next) => {
     });
   })
   .catch(err => {
-    console.log(err);
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   });
   
 };
@@ -87,16 +92,18 @@ exports.getOrders = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+  
     .then(products => {
       res.render('pages/shopPages/products', {
         prods: products,
         title: 'All Products',
-        path: '/products',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/products'
       });
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -131,11 +138,14 @@ exports.getProduct = (req, res, next) => {
       res.render('pages/shopPages/product-detail', {
         product: product,
         pageTitle: product.title,
-        path: '/product-detail',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/product-detail'
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.getIndex = (req, res, next) => {
@@ -145,10 +155,13 @@ exports.getIndex = (req, res, next) => {
         prods: products,
         pageTitle: 'Shop',
         path: '/'
+        
       });
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -162,11 +175,14 @@ exports.getCart = (req, res, next) => {
       res.render('pages/shopPages/cart', {
         path: '/cart',
         title: 'Your Cart',
-        products: products,
-        isAuthenticated: req.session.isLoggedIn
+        products: products
       })
     })
-    .catch(err => console.log(err)); 
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    }); 
 };
 
 exports.postCart = (req, res, next) => {
@@ -184,11 +200,15 @@ exports.postCart = (req, res, next) => {
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   req.user
-    .deleteItemFromCart(prodId)
+    .removeFromCart(prodId)
     .then(result => {
       res.redirect('/shopPages/shop/cart');
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postOrder = (req, res, next) => {
@@ -223,8 +243,7 @@ exports.getOrders = (req, res, next) => {
       res.render('pages/shopPages/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
-        orders: orders,
-        isAuthenticated: req.session.isLoggedIn
+        orders: orders
       });
     })
     .catch(err => console.log(err));

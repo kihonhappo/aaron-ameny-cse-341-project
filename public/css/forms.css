@@ -47,3 +47,7 @@ h3{text-align: center;}
 
 input[type=number] {width: 80px;}
 .product-image{float: right; width: 30%;}
+
+.form-group input.invalid {
+  border-color: red;
+}
